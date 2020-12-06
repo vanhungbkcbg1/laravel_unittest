@@ -18,4 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get("/upload","UploadController@index");
+Route::get("/upload/s3","UploadController@uploadToS3");
 Route::post("/upload","UploadController@upload")->name("upload");
