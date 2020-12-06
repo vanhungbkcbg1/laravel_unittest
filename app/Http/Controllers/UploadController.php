@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Aws\Credentials\CredentialProvider;
 use Aws\S3\S3Client;
 use Aws\Sts\StsClient;
 use Illuminate\Http\Request;
@@ -43,11 +44,12 @@ class UploadController extends Controller
         $s3Client = new S3Client([
             'version'     => '2006-03-01',
             'region'      => 'us-west-2',
-            'credentials' =>  [
-                'key'    => $result['Credentials']['AccessKeyId'],
-                'secret' => $result['Credentials']['SecretAccessKey'],
-                'token'  => $result['Credentials']['SessionToken']
-            ]
+            'credentials'=>CredentialProvider::defaultProvider()
+//            'credentials' =>  [
+//                'key'    => $result['Credentials']['AccessKeyId'],
+//                'secret' => $result['Credentials']['SecretAccessKey'],
+//                'token'  => $result['Credentials']['SessionToken']
+//            ]
         ]);
 
         $s3Client->putObject([
