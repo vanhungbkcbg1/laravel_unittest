@@ -19,4 +19,8 @@ interface IRepository
 
     public function update($id,array $attributes);
 
+    public function clear();
+
+    public function paginate($perPage,$orders=[]);
+
 }

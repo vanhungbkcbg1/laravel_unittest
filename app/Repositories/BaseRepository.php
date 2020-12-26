@@ -70,8 +70,25 @@ abstract class BaseRepository implements IRepository
         return $this->_model->find($id);
     }
 
-    public function delete($model){
+    public function delete($model)
+    {
         return $model->delete();
     }
+
+    public function clear()
+    {
+        return $this->_model->whereNotNull('id')->delete();
+    }
+
+    public function paginate($perPage,$orders=[])
+    {
+        if($orders){
+            foreach ($orders as $key =>$value){
+                $this->_model =$this->_model->orderBy($key,$value);
+            }
+        }
+        return $this->_model->paginate($perPage);
+    }
+
 
 }
