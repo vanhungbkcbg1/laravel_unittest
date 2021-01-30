@@ -95,7 +95,7 @@ class AnalyzedCommandCophieu extends Command
 
                 $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol);
 
-                $rate = $averageFifteenDay / $currentVolume;
+                $rate = $currentVolume ==0 ?0 : $averageFifteenDay / $currentVolume;
 
                 Log::info(sprintf("current volume=%s, average =%s", $currentVolume, $averageFifteenDay));
 
@@ -111,7 +111,8 @@ class AnalyzedCommandCophieu extends Command
 
                 //insert into symbol price
                 $symbolPrice = new SymbolPrice();
-                $symbolPrice->date = (new \DateTime())->format("Y-m-d");
+//                $symbolPrice->date = (new \DateTime())->format("Y-m-d");
+                $symbolPrice->date = '2021-01-29';
                 $symbolPrice->price = $stockOfDay[$symbol->name]['close'];
                 $symbolPrice->volume = $stockOfDay[$symbol->name]['volume'];
                 $symbolPrice->symbol = $symbol->name;
@@ -121,7 +122,8 @@ class AnalyzedCommandCophieu extends Command
             }
 
             $this->processHistoryRepo->create([
-                "date" => (new \DateTime())->format("Y-m-d")
+//                "date" => (new \DateTime())->format("Y-m-d")
+                "date" => '2021-01-29'
             ]);
 
             echo "done";

@@ -4,6 +4,11 @@
     @if(Session::has("message"))
     <div class="alert alert-info">{{Session::get("message")}}</div>
     @endif
+    <div>
+        @if($week==3 && $weekday <=3)
+            <h1 style="color: red;font-weight: bold">Dao han phai sinh thu 5 tuan nay</h1>
+        @endif
+    </div>
     <div class="container">
         <a class="btn btn-info" href="/download">Download file</a>
     </div>

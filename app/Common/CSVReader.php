@@ -19,6 +19,9 @@ class CSVReader
                 continue;
             }
             $line =fgets($handler);
+            if(!$line){
+                continue;
+            }
             $data =str_getcsv($line);
 
             $result[$data[0].".XSTC"] =[
@@ -28,6 +31,7 @@ class CSVReader
                     'close'=>$data[5],
                     "volume" =>$data[6]
             ];
+
         }
 
         fclose($handler);
