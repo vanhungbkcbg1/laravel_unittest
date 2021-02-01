@@ -13,7 +13,7 @@ class SymbolController extends BaseController
 {
     public function index()
     {
-        $token = "5fa56a56a0ffa6f258bc0d959c878d8a";
+        $token = "0bf19074694728dec585d8bff5361593";
 
         $queryString = http_build_query([
             'access_key' => $token,

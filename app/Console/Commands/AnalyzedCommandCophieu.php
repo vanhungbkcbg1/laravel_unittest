@@ -111,8 +111,8 @@ class AnalyzedCommandCophieu extends Command
 
                 //insert into symbol price
                 $symbolPrice = new SymbolPrice();
-//                $symbolPrice->date = (new \DateTime())->format("Y-m-d");
-                $symbolPrice->date = '2021-01-29';
+                $symbolPrice->date = (new \DateTime())->format("Y-m-d");
+//                $symbolPrice->date = '2021-01-29';
                 $symbolPrice->price = $stockOfDay[$symbol->name]['close'];
                 $symbolPrice->volume = $stockOfDay[$symbol->name]['volume'];
                 $symbolPrice->symbol = $symbol->name;
@@ -122,8 +122,8 @@ class AnalyzedCommandCophieu extends Command
             }
 
             $this->processHistoryRepo->create([
-//                "date" => (new \DateTime())->format("Y-m-d")
-                "date" => '2021-01-29'
+                "date" => (new \DateTime())->format("Y-m-d")
+//                "date" => '2021-01-29'
             ]);
 
             echo "done";
