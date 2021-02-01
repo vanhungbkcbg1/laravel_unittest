@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\StockPrice;
 use App\Repositories\SymbolAnalyzedRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 
 class HomeController extends Controller
 {
