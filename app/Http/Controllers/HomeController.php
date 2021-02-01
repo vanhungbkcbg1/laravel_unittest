@@ -21,6 +21,7 @@ class HomeController extends Controller
         $weekDay = strtotime('w',strtotime('now'));
         $data = $this->repo->paginate(20, ['volume' => "desc"]);
         return view("index", ['data' => $data,'week'=>$weekOfMonth,'weekday'=>$weekDay]);
+
     }
 
     function weekOfMonth() {
