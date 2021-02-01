@@ -105,8 +105,8 @@ class HomeController extends Controller
         //
         $loginUrl = 'https://www.cophieu68.vn/account/login.php'; //action from the login form
         $loginFields = array('username'=>'vanhungbkcbg1@gmail.com', 'tpassword'=>'9c23sn','ajax'=>1,"login"=>1); //login form field names and values
-//        $remotePageUrl = $url =sprintf("https://www.cophieu68.vn/export/dailyexcel.php?date=%s",date('d-m-Y'));; //url of the page you want to save
-        $remotePageUrl = $url =sprintf("https://www.cophieu68.vn/export/dailyexcel.php?date=%s",'29-01-2021');; //url of the page you want to save
+        $remotePageUrl = $url =sprintf("https://www.cophieu68.vn/export/dailyexcel.php?date=%s",date('d-m-Y'));; //url of the page you want to save
+//        $remotePageUrl = $url =sprintf("https://www.cophieu68.vn/export/dailyexcel.php?date=%s",'29-01-2021');; //url of the page you want to save
 
         $login = $this->getUrl($loginUrl, 'post', $loginFields); //login to the site
 
