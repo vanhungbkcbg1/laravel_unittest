@@ -22,3 +22,8 @@ Route::post("/upload","UploadController@upload")->name("upload");
 
 Route::get("/symbols","SymbolController@index");
 Route::get("/prices","SymbolController@stockPrice");
+
+Route::get('test', function () {
+    event(new App\Events\StockAnalyzed('Someone'));
+    return "Event has been sent!";
+});

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Common\CSVReader;
+use App\Events\StockAnalyzed;
 use App\Models\Symbol;
 use App\Models\SymbolAnalyzed;
 use App\Models\SymbolPrice;
@@ -52,6 +53,7 @@ class StockPrice implements ShouldQueue
         //
 
         Log::info("done");
+
 
         if ($this->processHistoryRepo->hasProcess()) {
             return;
@@ -115,6 +117,7 @@ class StockPrice implements ShouldQueue
 //                "date" => '2021-01-29'
         ]);
 
-        echo "done";
+        //dispatch event
+        event(new StockAnalyzed('Someone'));
     }
 }
