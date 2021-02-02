@@ -56,6 +56,8 @@ class StockPrice implements ShouldQueue
 
 
         if ($this->processHistoryRepo->hasProcess()) {
+            //dispatch event
+            event(new StockAnalyzed('Someone'));
             return;
         }
 
@@ -63,6 +65,8 @@ class StockPrice implements ShouldQueue
         $sunday = 0;
         $saturday = 6;
         if ($weekday == $sunday || $weekday == $saturday) {
+            //dispatch event
+            event(new StockAnalyzed('Someone'));
             return;
         }
 
