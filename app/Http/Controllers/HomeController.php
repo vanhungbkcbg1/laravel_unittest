@@ -62,6 +62,7 @@ class HomeController extends Controller
         $url =sprintf("https://images1.cafef.vn/data/%s/CafeF.SolieuGD.Raw.%s.zip",'20201231','31122020');
         $content = file_get_contents($url);
         file_put_contents("test.zip", $content);
+
     }
 
     public function downloadFileCophieu68(): void
