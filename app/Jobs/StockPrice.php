@@ -46,6 +46,8 @@ class StockPrice implements ShouldQueue
      */
     public function handle(SymbolPriceRepository $repo, SymbolAnalyzedRepository $analyzedRepository, ProcessHistoryRepository $processHistoryRepository, CSVReader $reader)
     {
+        $processDate = (new \DateTime())->format("Y-m-d");
+
         $this->repo = $repo;
         $this->reader = $reader;
         $this->analyzedRepository = $analyzedRepository;
@@ -106,8 +108,7 @@ class StockPrice implements ShouldQueue
 
             //insert into symbol price
             $symbolPrice = new SymbolPrice();
-            $symbolPrice->date = (new \DateTime())->format("Y-m-d");
-//                $symbolPrice->date = '2021-01-29';
+            $symbolPrice->date = $processDate;
             $symbolPrice->price = $stockOfDay[$symbol->name]['close'];
             $symbolPrice->volume = $stockOfDay[$symbol->name]['volume'];
             $symbolPrice->symbol = $symbol->name;
@@ -117,8 +118,7 @@ class StockPrice implements ShouldQueue
         }
 
         $this->processHistoryRepo->create([
-            "date" => (new \DateTime())->format("Y-m-d")
-//                "date" => '2021-01-29'
+            "date" => $processDate
         ]);
 
         //dispatch event

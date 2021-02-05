@@ -62,6 +62,7 @@ class AnalyzedCommandCophieu extends Command
     public function handle()
     {
         //
+        $processDate =(new \DateTime())->format("Y-m-d");
         try {
 
             if ($this->processHistoryRepo->hasProcess()) {
@@ -111,7 +112,7 @@ class AnalyzedCommandCophieu extends Command
 
                 //insert into symbol price
                 $symbolPrice = new SymbolPrice();
-                $symbolPrice->date = (new \DateTime())->format("Y-m-d");
+                $symbolPrice->date = $processDate;
 //                $symbolPrice->date = '2021-01-29';
                 $symbolPrice->price = $stockOfDay[$symbol->name]['close'];
                 $symbolPrice->volume = $stockOfDay[$symbol->name]['volume'];
@@ -122,7 +123,7 @@ class AnalyzedCommandCophieu extends Command
             }
 
             $this->processHistoryRepo->create([
-                "date" => (new \DateTime())->format("Y-m-d")
+                "date" => $processDate
 //                "date" => '2021-01-29'
             ]);
 
