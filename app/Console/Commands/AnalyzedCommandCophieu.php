@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Common\CSVReader;
+use App\Models\NewSymbol;
 use App\Models\Symbol;
 use App\Models\SymbolAnalyzed;
 use App\Models\SymbolPrice;
@@ -76,12 +77,13 @@ class AnalyzedCommandCophieu extends Command
                 return;
             }
 
-            $symbols = Symbol::all();
+            $symbols = NewSymbol::all();
 
             $this->analyzedRepository->clear();
 
 
             $stockOfDay = $this->reader->readFile(fopen(public_path("file.csv"), 'r'));
+
 
             foreach ($symbols as $symbol) {
 

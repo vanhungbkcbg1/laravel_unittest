@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', "HomeController@index");
 Route::get('/download', "HomeController@download");
+Route::get('/download-website', "HomeController@downloadWebsite");
 
 Route::get("/upload","UploadController@index");
 Route::get("/upload/s3","UploadController@uploadToS3");
 Route::post("/upload","UploadController@upload")->name("upload");
 
 Route::get("/symbols","SymbolController@index");
+Route::get("/new-symbol","SymbolController@newSymbol");
 Route::get("/prices","SymbolController@stockPrice");
 
 Route::get('test', function () {

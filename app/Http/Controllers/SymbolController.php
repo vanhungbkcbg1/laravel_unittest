@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\CSVReader;
+use App\Models\NewSymbol;
 use App\Models\Symbol;
 use App\Models\SymbolPrice;
+use App\Repositories\INewSymbolRepository;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -36,6 +39,19 @@ class SymbolController extends BaseController
             $symbol->save();
         }
         die();
+    }
+
+    public function newSymbol(INewSymbolRepository $repository){
+        $handler= fopen("test.csv",'r');
+
+        $data =CSVReader::readFileV2($handler);
+        foreach ($data as $name=>$item){
+
+            $repository->create([
+                "name"=>$name
+            ]);
+        }
+
     }
 
     public function stockPrice()

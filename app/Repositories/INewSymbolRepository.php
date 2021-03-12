@@ -9,10 +9,8 @@
 namespace App\Repositories;
 
 
-use App\Models\NewSymbol;
 use App\Models\Symbol;
 
-interface ISymbolPriceRepository extends IRepository
+interface INewSymbolRepository extends IRepository
 {
-    public function getAverageFifteenDay(NewSymbol $symbol);
 }

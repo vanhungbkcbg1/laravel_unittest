@@ -80,14 +80,20 @@ abstract class BaseRepository implements IRepository
         return $this->_model->whereNotNull('id')->delete();
     }
 
-    public function paginate($perPage,$orders=[])
+    public function paginate($perPage,$orders=[],$credential=[],$page=1)
     {
         if($orders){
             foreach ($orders as $key =>$value){
                 $this->_model =$this->_model->orderBy($key,$value);
             }
         }
-        return $this->_model->paginate($perPage);
+
+        if($credential){
+            foreach ($credential as $key=>$value){
+                $this->_model= $this->_model->where($key,$value);
+            }
+        }
+        return $this->_model->paginate($perPage,["*"],"page",$page);
     }
 
 

@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 
+use App\Models\NewSymbol;
 use App\Models\Symbol;
 use App\Models\SymbolPrice;
 use App\Models\User;
@@ -21,7 +22,7 @@ class SymbolPriceRepository extends BaseRepository implements ISymbolPriceReposi
         return SymbolPrice::class;
     }
 
-    public function getAverageFifteenDay(Symbol $symbol)
+    public function getAverageFifteenDay(NewSymbol $symbol)
     {
         $today = (new \DateTime())->format("Y-m-d");
         return $this->_model->where("date",'<',$today)->where('symbol',$symbol->name)->average("volume");
