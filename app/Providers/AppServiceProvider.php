@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\NewSymbol;
 use App\Repositories\CategoryRepository;
+use App\Repositories\DayOffRepository;
 use App\Repositories\ICategoryRepository;
+use App\Repositories\IDayOffRepository;
 use App\Repositories\INewSymbolRepository;
 use App\Repositories\IUserRepository;
 use App\Repositories\NewSymbolRepository;
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IUserRepository::class,UserRepository::class);
         $this->app->bind(ICategoryRepository::class,CategoryRepository::class);
         $this->app->bind(INewSymbolRepository::class,NewSymbolRepository::class);
+        $this->app->bind(IDayOffRepository::class,DayOffRepository::class);
     }
 
     /**

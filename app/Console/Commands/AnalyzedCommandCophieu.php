@@ -7,6 +7,7 @@ use App\Models\NewSymbol;
 use App\Models\Symbol;
 use App\Models\SymbolAnalyzed;
 use App\Models\SymbolPrice;
+use App\Repositories\IDayOffRepository;
 use App\Repositories\ProcessHistoryRepository;
 use App\Repositories\SymbolAnalyzedRepository;
 use App\Repositories\SymbolPriceRepository;
@@ -40,17 +41,21 @@ class AnalyzedCommandCophieu extends Command
 
     private $processHistoryRepo;
 
+    /** @var IDayOffRepository */
+    private $dayOffRepository;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(SymbolPriceRepository $repo, SymbolAnalyzedRepository $analyzedRepository, ProcessHistoryRepository $processHistoryRepository, CSVReader $reader)
+    public function __construct(SymbolPriceRepository $repo, SymbolAnalyzedRepository $analyzedRepository, ProcessHistoryRepository $processHistoryRepository, CSVReader $reader, IDayOffRepository $dayOffRepository)
     {
         $this->repo = $repo;
         $this->reader = $reader;
         $this->analyzedRepository = $analyzedRepository;
         $this->processHistoryRepo = $processHistoryRepository;
+        $this->dayOffRepository=$dayOffRepository;
         parent::__construct();
 
     }
@@ -74,6 +79,10 @@ class AnalyzedCommandCophieu extends Command
             $sunday = 0;
             $saturday = 6;
             if ($weekday == $sunday || $weekday == $saturday) {
+                return;
+            }
+
+            if($this->dayOffRepository->findByDay($processDate)->count()>0){
                 return;
             }
 
