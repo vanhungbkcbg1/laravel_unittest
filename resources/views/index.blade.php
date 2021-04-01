@@ -22,6 +22,9 @@
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane {{$tabActive == 'hose'?'active':''}}" id="hose" >
+                <div style="margin: 10px;">
+                    <a class="btn btn-info" href="{{route('output_process_data',['tab'=>'hose'])}}">Download Processed data</a>
+                </div>
                 <div style="float: right">
                     {{ $hose->links() }}
                 </div>
@@ -48,6 +51,9 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane {{$tabActive == 'hnx'?'active':''}}" id="hnx">
+                <div style="margin: 10px;">
+                    <a class="btn btn-info" href="{{route('output_process_data',['tab'=>'hnx'])}}">Download Processed data</a>
+                </div>
                 <div style="float: right">
                     {{ $hnx->links() }}
                 </div>
@@ -74,6 +80,9 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane {{$tabActive == 'upcom'?'active':''}}" id="upcom">
+                <div style="margin: 10px;">
+                    <a class="btn btn-info" href="{{route('output_process_data',['tab'=>'upcom'])}}">Download Processed data</a>
+                </div>
                 <div style="float: right">
                     {{ $upcom->links() }}
                 </div>

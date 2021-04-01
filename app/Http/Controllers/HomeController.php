@@ -7,12 +7,16 @@ use App\Downloader;
 use App\Jobs\StockPrice;
 use App\Repositories\SymbolAnalyzedRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use PHPHtmlParser\Dom;
 use Sunra\PhpSimple\HtmlDomParser;
 
 class HomeController extends Controller
 {
+    const TAB_HOSE ='hose';
+    const TAB_UPCOM ='upcom';
+    const TAB_HNX ='hnx';
     private $repo;
 
     public function __construct(SymbolAnalyzedRepository $repo)
@@ -20,16 +24,53 @@ class HomeController extends Controller
         $this->repo = $repo;
     }
 
+    public function outputFile(Request $request){
+        $tabActive = $request->get('tab', self::TAB_HOSE);
+        if ($tabActive == self::TAB_HOSE) {
+            $data = DB::table("symbol_analyzed")
+                ->join('new_symbols', 'symbol_analyzed.symbol', '=', 'new_symbols.name')
+                ->where('new_symbols.exchange', strtoupper(self::TAB_HOSE))
+                ->get();
+        }
+        if ($tabActive == self::TAB_HNX) {
+            $data = DB::table("symbol_analyzed")
+                ->join('new_symbols', 'symbol_analyzed.symbol', '=', 'new_symbols.name')
+                ->where('new_symbols.exchange', strtoupper(self::TAB_HNX))
+                ->get();
+        }
+
+        if ($tabActive == self::TAB_UPCOM) {
+            $data = DB::table("symbol_analyzed")
+                ->join('new_symbols', 'symbol_analyzed.symbol', '=', 'new_symbols.name')
+                ->where('new_symbols.exchange', strtoupper(self::TAB_UPCOM))
+                ->get();
+        }
+
+        if(!$data->count()){
+            return "no data";
+        }
+
+
+        $handler =fopen(public_path('process_data.txt'),'w+');
+        $content=implode(PHP_EOL,array_map(function($item){
+                return $item->symbol;
+        },$data->all()));
+
+        fwrite($handler,$content);
+        fclose($handler);
+
+        return \response()->download(public_path('process_data.txt'));
+    }
     //
     public function index(Request $request)
     {
         $weekOfMonth = $this->weekOfMonth();
         $weekDay = strtotime('w', strtotime('now'));
 
-        $tabActive = $request->get('tab', 'hose');
+        $tabActive = $request->get('tab', self::TAB_HOSE);
         $page = $request->get('page', 1);
 
-        if ($tabActive == 'hose') {
+        if ($tabActive == self::TAB_HOSE) {
             $hose = DB::table("symbol_analyzed")
                 ->join('new_symbols', 'symbol_analyzed.symbol', '=', 'new_symbols.name')
                 ->orderBy('symbol_analyzed.volume', 'desc')
@@ -55,7 +96,7 @@ class HomeController extends Controller
                 ->appends(["tab" => "upcom"]);
 
 
-        } elseif ($tabActive == 'hnx') {
+        } elseif ($tabActive == self::TAB_HNX) {
             $hose = DB::table("symbol_analyzed")
                 ->join('new_symbols', 'symbol_analyzed.symbol', '=', 'new_symbols.name')
                 ->orderBy('symbol_analyzed.volume', 'desc')
@@ -79,7 +120,7 @@ class HomeController extends Controller
                 ->paginate(20, ['*'], 'page', 1)
                 ->appends(["tab" => "upcom"]);
 
-        } elseif ($tabActive == 'upcom') {
+        } elseif ($tabActive == self::TAB_UPCOM) {
             $hose = DB::table("symbol_analyzed")
                 ->join('new_symbols', 'symbol_analyzed.symbol', '=', 'new_symbols.name')
                 ->orderBy('symbol_analyzed.volume', 'desc')

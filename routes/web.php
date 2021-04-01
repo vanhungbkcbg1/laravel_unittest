@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', "HomeController@index");
 Route::get('/download', "HomeController@download");
 Route::get('/download-website', "HomeController@downloadWebsite");
+Route::get('/download-process-data', "HomeController@outputFile")->name('output_process_data');
 
 Route::get("/upload","UploadController@index");
 Route::get("/upload/s3","UploadController@uploadToS3");
