@@ -8,8 +8,12 @@ use App\Repositories\DayOffRepository;
 use App\Repositories\ICategoryRepository;
 use App\Repositories\IDayOffRepository;
 use App\Repositories\INewSymbolRepository;
+use App\Repositories\IProcessHistoryRepository;
+use App\Repositories\ISymbolPriceRepository;
 use App\Repositories\IUserRepository;
 use App\Repositories\NewSymbolRepository;
+use App\Repositories\ProcessHistoryRepository;
+use App\Repositories\SymbolPriceRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ICategoryRepository::class,CategoryRepository::class);
         $this->app->bind(INewSymbolRepository::class,NewSymbolRepository::class);
         $this->app->bind(IDayOffRepository::class,DayOffRepository::class);
+        $this->app->bind(ISymbolPriceRepository::class,SymbolPriceRepository::class);
+        $this->app->bind(IProcessHistoryRepository::class,ProcessHistoryRepository::class);
     }
 
     /**

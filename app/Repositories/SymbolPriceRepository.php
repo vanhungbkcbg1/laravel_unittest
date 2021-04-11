@@ -27,4 +27,11 @@ class SymbolPriceRepository extends BaseRepository implements ISymbolPriceReposi
         $today = (new \DateTime())->format("Y-m-d");
         return $this->_model->where("date",'<',$today)->where('symbol',$symbol->name)->average("volume");
     }
+
+    /**
+     * Delete older than 50 days data
+     */
+    public function deleteOldData($date){
+        $this->_model->where('date','<',$date)->delete();
+    }
 }

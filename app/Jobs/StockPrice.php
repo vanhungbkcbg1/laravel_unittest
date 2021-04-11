@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Common\CSVReader;
 use App\Events\StockAnalyzed;
+use App\Models\NewSymbol;
 use App\Models\Symbol;
 use App\Models\SymbolAnalyzed;
 use App\Models\SymbolPrice;
@@ -72,7 +73,7 @@ class StockPrice implements ShouldQueue
             return;
         }
 
-        $symbols = Symbol::all();
+        $symbols = NewSymbol::all();
 
         $this->analyzedRepository->clear();
 

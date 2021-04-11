@@ -96,5 +96,19 @@ abstract class BaseRepository implements IRepository
         return $this->_model->paginate($perPage,["*"],"page",$page);
     }
 
+    public function findByCondition($conditions=[]){
+        foreach ($conditions as $item){
+            $this->_model =$this->_model->where($item[0],$item[1],$item[2]);
+        }
+        return $this->_model->get();
+    }
+
+    public function findOneByCondition($conditions=[]){
+        foreach ($conditions as $item){
+            $this->_model->where($item[0],$item[1],$item[2]);
+        }
+        return $this->_model->first();
+    }
+
 
 }

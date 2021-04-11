@@ -14,4 +14,6 @@ use App\Models\Symbol;
 interface IProcessHistoryRepository extends IRepository
 {
     public function hasProcess();
+
+    public function getLastFiftyDay();
 }

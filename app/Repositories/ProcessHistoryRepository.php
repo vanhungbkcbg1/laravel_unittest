@@ -13,6 +13,8 @@ use App\Models\ProcessHistory;
 use App\Models\Symbol;
 use App\Models\SymbolPrice;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ProcessHistoryRepository extends BaseRepository implements IProcessHistoryRepository
 {
@@ -24,8 +26,18 @@ class ProcessHistoryRepository extends BaseRepository implements IProcessHistory
 
     public function hasProcess()
     {
-        $today =(new \DateTime())->format('Y-m-d');
-        return $this->_model->where("date",$today)->first();
+        $today = (new \DateTime())->format('Y-m-d');
+        return $this->_model->where("date", $today)->first();
+    }
+
+    public function getLastFiftyDay()
+    {
+        /** @var Collection $data */
+        $data = $this->_model->orderBy('id', 'desc')->take(50)->get();
+        if ($data->count() == 50) {
+            return $data[0]->date;
+        }
+        return null;
     }
 
 }

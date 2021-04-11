@@ -3,6 +3,7 @@
 namespace Tests\Unit\Repositories;
 
 use App\Models\Category;
+use App\Models\NewSymbol;
 use App\Models\Symbol;
 use App\Models\SymbolPrice;
 use App\Repositories\CategoryRepository;
@@ -60,7 +61,7 @@ class SymbolPriceRepositoryTest extends TestCase
       ]);
 
       //create symbol
-      $symbol=  \factory(Symbol::class)->create([
+      $symbol=  \factory(NewSymbol::class)->create([
           "name"=>"ABC"
       ]);
 
@@ -77,5 +78,20 @@ class SymbolPriceRepositoryTest extends TestCase
       $actual =$this->repo->getAverageFifteenDay($symbol);
 
       $this->assertEquals($expect,$actual);
+    }
+
+    public function testDeleteOldData(){
+
+        $obj=new SymbolPrice();
+        $obj->date ='2021-04-10';
+        $obj->symbol ='test';
+        $obj->price =10;
+        $obj->volume =100;
+        $obj->save();
+
+       $date=new \DateTime();
+       $this->repo->deleteOldData($date);
+
+       $this->assertDatabaseMissing('symbol_prices',['id'=>$obj->id]);
     }
 }
