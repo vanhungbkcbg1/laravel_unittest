@@ -27,9 +27,11 @@ Route::get("/new-symbol","SymbolController@newSymbol");
 Route::get("/prices","SymbolController@stockPrice");
 
 Route::get("/day-offs","DayOffController@index");
+Route::get("/mail","MailController@index");
 Route::post("/day-offs","DayOffController@newAction");
 
 Route::get('test', function () {
     event(new App\Events\StockAnalyzed('Someone'));
     return "Event has been sent!";
 });
+
