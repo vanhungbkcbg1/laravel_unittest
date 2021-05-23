@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\AuctionUserWasOutbidded;
+use App\Listeners\EmailOutbiddedUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        //dang ki event: format event=> array of listener
+        AuctionUserWasOutbidded::class=>[
+            EmailOutbiddedUser::class
+        ]
     ];
 
     /**
