@@ -35,7 +35,7 @@ class ProcessHistoryRepository extends BaseRepository implements IProcessHistory
         /** @var Collection $data */
         $data = $this->_model->orderBy('id', 'desc')->take(50)->get();
         if ($data->count() == 50) {
-            return $data[0]->date;
+            return $data[49]->date;
         }
         return null;
     }

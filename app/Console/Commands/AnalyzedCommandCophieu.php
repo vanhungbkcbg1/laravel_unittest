@@ -112,7 +112,7 @@ class AnalyzedCommandCophieu extends Command
                 Log::info(sprintf("current volume=%s, average =%s", $currentVolume, $averageFifteenDay));
 
 
-                if ($rate >= 1.5 && $averageFifteenDay >= 100000) {
+                if ($rate >= 1.1 && $averageFifteenDay >= 100000) {
                     //insert to table analyzed to more analyzed
                     $symbolNeedToInvest = new SymbolAnalyzed();
                     $symbolNeedToInvest->symbol = $symbol->name;
