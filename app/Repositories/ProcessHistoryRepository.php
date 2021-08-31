@@ -40,4 +40,14 @@ class ProcessHistoryRepository extends BaseRepository implements IProcessHistory
         return null;
     }
 
+    public function getLastFiveDay()
+    {
+        /** @var Collection $data */
+        $data = $this->_model->orderBy('id', 'desc')->take(5)->get();
+        if ($data->count() == 5) {
+            return $data[4]->date;
+        }
+        return null;
+    }
+
 }

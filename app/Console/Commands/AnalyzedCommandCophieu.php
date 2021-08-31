@@ -105,7 +105,9 @@ class AnalyzedCommandCophieu extends Command
 
                 $currentVolume = $stockOfDay[$symbol->name]['volume'];
 
-                $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol);
+                $lastFiveDay = $this->processHistoryRepo->getLastFiveDay();
+
+                $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol,$lastFiveDay);
 
                 $rate = $currentVolume ==0 ?0 : $averageFifteenDay / $currentVolume;
 

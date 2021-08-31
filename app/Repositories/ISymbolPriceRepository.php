@@ -14,7 +14,7 @@ use App\Models\Symbol;
 
 interface ISymbolPriceRepository extends IRepository
 {
-    public function getAverageFifteenDay(NewSymbol $symbol);
+    public function getAverageFifteenDay(NewSymbol $symbol,$fromDate);
 
     public function deleteOldData($date);
 }
