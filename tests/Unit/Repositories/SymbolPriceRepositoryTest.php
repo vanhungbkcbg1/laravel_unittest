@@ -55,7 +55,7 @@ class SymbolPriceRepositoryTest extends TestCase
      */
     public function testGetAverageFifteenDay(){
       \factory(SymbolPrice::class,2)->create();
-      \factory(SymbolPrice::class,2)->create([
+      \factory(SymbolPrice::class,10)->create([
 
           "symbol"=>"ABC"
       ]);
@@ -65,15 +65,21 @@ class SymbolPriceRepositoryTest extends TestCase
           "name"=>"ABC"
       ]);
 
+
+        $today = date('Y-m-d');
+        $fromDate= date('Y-m-d',strtotime('-5 weekday'));
       $all=$this->repo->getAll();
+      $dataFilled =$all->filter(function($item) use ($today,$fromDate){
+          return $item->date < $today && $item->date >= $fromDate;
+      });
       $total =0 ;
-      foreach ($all as $item){
+      foreach ($dataFilled as $item){
           if($item->symbol =="ABC"){
               $total += $item->volume;
           }
       }
 
-      $expect =$total/2.0;
+      $expect =$total/$dataFilled->count();
 
       $actual =$this->repo->getAverageFifteenDay($symbol);
 

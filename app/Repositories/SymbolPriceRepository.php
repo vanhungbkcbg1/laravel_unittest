@@ -25,7 +25,7 @@ class SymbolPriceRepository extends BaseRepository implements ISymbolPriceReposi
     public function getAverageFifteenDay(NewSymbol $symbol)
     {
         $today = date('Y-m-d');
-        $fromDate= date('Y-m-d',strtotime('-5 day'));
+        $fromDate= date('Y-m-d',strtotime('-5 weekday'));
         return $this->_model->where("date",'<',$today)->where('date','>=',$fromDate)->where('symbol',$symbol->name)->average("volume");
     }
 

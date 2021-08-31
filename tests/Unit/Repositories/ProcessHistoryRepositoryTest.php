@@ -41,7 +41,7 @@ class ProcessHistoryRepositoryTest extends TestCase
         $data = DB::select('select * from process_history order by id desc limit 50');
         $expected =null;
         if(sizeof($data) ==50){
-            $expected =$data[0]->date;
+            $expected =$data[49]->date;
         }
 
         $actual =$this->repo->getLastFiftyDay();

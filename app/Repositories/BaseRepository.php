@@ -9,6 +9,8 @@
 namespace App\Repositories;
 
 
+use Illuminate\Support\Collection;
+
 abstract class BaseRepository implements IRepository
 {
     protected $_model;
@@ -30,7 +32,7 @@ abstract class BaseRepository implements IRepository
     public abstract function getModel();
 
     /***Get All
-     * @return mixed
+     * @return Collection
      */
     public function getAll()
     {
