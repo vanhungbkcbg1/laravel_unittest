@@ -19,7 +19,7 @@ use Tests\TestCase;
 
 class SymbolPriceRepositoryTest extends TestCase
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
     /**
      * @var ISymbolPriceRepository $repo
      */
@@ -79,9 +79,9 @@ class SymbolPriceRepositoryTest extends TestCase
           }
       }
 
-      $expect =$total/$dataFilled->count();
+      $expect =$dataFilled->count() >0?$total/$dataFilled->count():0;
 
-      $actual =$this->repo->getAverageFifteenDay($symbol);
+      $actual =$this->repo->getAverageFifteenDay($symbol,$fromDate);
 
       $this->assertEquals($expect,$actual);
     }
