@@ -100,4 +100,27 @@ class SymbolPriceRepositoryTest extends TestCase
 
        $this->assertDatabaseMissing('symbol_prices',['id'=>$obj->id]);
     }
+
+    /**
+     * @covers \App\Repositories\SymbolPriceRepository::getValueByDate
+     * @throws \Exception
+     */
+    public function test_getValueByDate()
+    {
+
+        $symbol=  \factory(NewSymbol::class)->create([
+            "name"=>"ABC"
+        ]);
+
+        $obj=new SymbolPrice();
+        $obj->date ='2021-04-10';
+        $obj->symbol ='ABC';
+        $obj->price =10;
+        $obj->volume =100;
+        $obj->save();
+
+        $data = $this->repo->getValueByDate($symbol, '2021-04-10');
+
+        $this->assertEquals(10, $data->price);
+    }
 }

@@ -17,4 +17,6 @@ interface ISymbolPriceRepository extends IRepository
     public function getAverageFifteenDay(NewSymbol $symbol,$fromDate);
 
     public function deleteOldData($date);
+
+    public function getValueByDate(NewSymbol $symbol, $date);
 }

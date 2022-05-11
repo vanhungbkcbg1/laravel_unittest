@@ -107,14 +107,21 @@ class AnalyzedCommandCophieu extends Command
 
                 $lastFiveDay = $this->processHistoryRepo->getLastFiveDay();
 
+                $yesterDay = $this->processHistoryRepo->getYesterday();
+                $lastTwoDay = $this->processHistoryRepo->getLastTwoDay();
+
                 $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol,$lastFiveDay);
+
+                $priceYesterDay = $this->repo->getValueByDate($symbol, $yesterDay)->price;
+                $priceLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->price;
+                $currentPrice = $stockOfDay[$symbol->name]['close'];
 
                 $rate = $currentVolume ==0 ?0 : $averageFifteenDay / $currentVolume;
 
                 Log::info(sprintf("current volume=%s, average =%s", $currentVolume, $averageFifteenDay));
 
 
-                if ($rate >= 1.1 && $averageFifteenDay >= 10000) {
+                if ($rate >= 1.1 && $averageFifteenDay >= 10000 && $this->compare([$priceYesterDay, $priceLastTwoDay], $currentPrice)) {
                     //insert to table analyzed to more analyzed
                     $symbolNeedToInvest = new SymbolAnalyzed();
                     $symbolNeedToInvest->symbol = $symbol->name;
@@ -146,5 +153,17 @@ class AnalyzedCommandCophieu extends Command
             Log::error($e->getMessage());
         }
 
+    }
+
+
+    private function compare(array $data, $value)
+    {
+        foreach ($data as $item) {
+            $result = abs((float)$item - (float)$value) / $item;
+            if ($result >= 0.015) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -18,4 +18,8 @@ interface IProcessHistoryRepository extends IRepository
     public function getLastFiftyDay();
 
     public function getLastFiveDay();
+
+    public function getYesterday();
+
+    public function getLastTwoDay();
 }

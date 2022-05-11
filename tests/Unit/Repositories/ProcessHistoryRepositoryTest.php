@@ -54,4 +54,30 @@ class ProcessHistoryRepositoryTest extends TestCase
         $actual =$this->repo->getLastFiftyDay();
         $this->assertNull($actual);
     }
+
+    /**
+     * @covers \App\Repositories\ProcessHistoryRepository::getYesterday
+     */
+    public function test_getYesterday()
+    {
+        $categories = \factory(ProcessHistory::class, 100)->create();
+        $data = DB::select('select * from process_history order by id desc limit 1');
+
+        $actual =$this->repo->getYesterday();
+
+        $this->assertEquals($data[0]->date, $actual);
+    }
+
+    /**
+     * @covers \App\Repositories\ProcessHistoryRepository::getLastTwoDay
+     */
+    public function test_getLastTwoDay()
+    {
+        $categories = \factory(ProcessHistory::class, 100)->create();
+        $data = DB::select('select * from process_history order by id desc limit 2');
+
+        $actual =$this->repo->getLastTwoDay();
+
+        $this->assertEquals($data[1]->date, $actual);
+    }
 }

@@ -35,4 +35,9 @@ class SymbolPriceRepository extends BaseRepository implements ISymbolPriceReposi
     public function deleteOldData($date){
         $this->_model->where('date','<',$date)->delete();
     }
+
+    public function getValueByDate(NewSymbol $symbol, $date)
+    {
+        return $this->_model->where('date', $date)->where('symbol',$symbol->name)->first();
+    }
 }

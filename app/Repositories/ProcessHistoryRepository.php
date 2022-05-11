@@ -50,4 +50,15 @@ class ProcessHistoryRepository extends BaseRepository implements IProcessHistory
         return null;
     }
 
+    public function getYesterday()
+    {
+        $data = $this->_model->orderBy('id', 'desc')->take(1)->get();
+        return $data[0]->date;
+    }
+
+    public function getLastTwoDay()
+    {
+        $data = $this->_model->orderBy('id', 'desc')->take(2)->get();
+        return $data[1]->date;
+    }
 }
