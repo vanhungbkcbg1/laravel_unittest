@@ -112,16 +112,41 @@ class AnalyzedCommandCophieu extends Command
 
                 $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol,$lastFiveDay);
 
-                $priceYesterDay = $this->repo->getValueByDate($symbol, $yesterDay)->price;
+                $priceYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->price;
+                $lowYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->low;
+                $highYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->high;
                 $priceLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->price;
+                $lowLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->low;
+                $highLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->high;
                 $currentPrice = $stockOfDay[$symbol->name]['close'];
+                $currentLowPrice = $stockOfDay[$symbol->name]['low'];
+                $currentHighPrice = $stockOfDay[$symbol->name]['high'];
+
+                $sietNenParam = [
+                    [
+                        "low" => $lowLastTwoDay,
+                        'high' => $highLastTwoDay
+                    ],
+                    [
+                        "low" => $lowYesterday,
+                        "high" => $highYesterday
+                    ],
+                    [
+                        "low" => $currentLowPrice,
+                        "high" => $currentHighPrice
+                    ]
+                ];
 
                 $rate = $currentVolume ==0 ?0 : $averageFifteenDay / $currentVolume;
 
                 Log::info(sprintf("current volume=%s, average =%s", $currentVolume, $averageFifteenDay));
 
 
-                if ($rate >= 1.1 && $averageFifteenDay >= 10000 && $this->compare([$priceYesterDay, $priceLastTwoDay], $currentPrice)) {
+                if (
+                       $rate >= 1.1 && $averageFifteenDay >= 10000
+                    && $this->compare([$priceYesterday, $priceLastTwoDay], $currentPrice)
+                    && $this->sietNen($sietNenParam)
+                ) {
                     //insert to table analyzed to more analyzed
                     $symbolNeedToInvest = new SymbolAnalyzed();
                     $symbolNeedToInvest->symbol = $symbol->name;
@@ -135,6 +160,8 @@ class AnalyzedCommandCophieu extends Command
                 $symbolPrice->date = $processDate;
 //                $symbolPrice->date = '2021-01-29';
                 $symbolPrice->price = $stockOfDay[$symbol->name]['close'];
+                $symbolPrice->low = $stockOfDay[$symbol->name]['low'];
+                $symbolPrice->high = $stockOfDay[$symbol->name]['high'];
                 $symbolPrice->volume = $stockOfDay[$symbol->name]['volume'];
                 $symbolPrice->symbol = $symbol->name;
                 $symbolPrice->save();
@@ -156,13 +183,37 @@ class AnalyzedCommandCophieu extends Command
     }
 
 
+    /** siet nen vol can kiet
+     * @param array $data
+     * @param $value
+     * @return bool
+     */
     private function compare(array $data, $value)
     {
         foreach ($data as $item) {
-            $result = abs((float)$item - (float)$value) / $item;
-            if ($result >= 0.015) {
+            if(!$this->match($item, $value)){
+                return  false;
+            }
+        }
+        return true;
+    }
+
+    private function sietNen(array $values)
+    {
+        foreach ($values as $value) {
+            if (!$this->match($value['high'], $value['low'])) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    private function match(float $a, float $b):bool
+    {
+        $result = abs((float)$a - (float)$b) / $b;
+        if ($result >= 0.015) {
+            return false;
         }
         return true;
     }
