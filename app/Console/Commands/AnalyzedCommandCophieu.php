@@ -211,6 +211,9 @@ class AnalyzedCommandCophieu extends Command
 
     private function match(float $a, float $b):bool
     {
+        if ($b == 0) {
+            return  false;
+        }
         $result = abs((float)$a - (float)$b) / $b;
         if ($result >= 0.015) {
             return false;
