@@ -144,8 +144,8 @@ class AnalyzedCommandCophieu extends Command
 
                 if (
                        $rate >= 1.1 && $averageFifteenDay >= 10000
-                    && $this->compare([$priceYesterday, $priceLastTwoDay], $currentPrice)
-                    && $this->sietNen($sietNenParam)
+                   // && $this->compare([$priceYesterday, $priceLastTwoDay], $currentPrice)
+                   // && $this->sietNen($sietNenParam)
                 ) {
                     //insert to table analyzed to more analyzed
                     $symbolNeedToInvest = new SymbolAnalyzed();
