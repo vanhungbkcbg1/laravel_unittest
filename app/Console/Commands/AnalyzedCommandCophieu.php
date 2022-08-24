@@ -106,11 +106,14 @@ class AnalyzedCommandCophieu extends Command
                 $currentVolume = $stockOfDay[$symbol->name]['volume'];
 
                 $lastFiveDay = $this->processHistoryRepo->getLastFiveDay();
+                
+                $lastFiftyDay = $this->processHistoryRepo->getLastFiftyDay();
 
                 $yesterDay = $this->processHistoryRepo->getYesterday();
                 $lastTwoDay = $this->processHistoryRepo->getLastTwoDay();
 
-                $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol,$lastFiveDay);
+                $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol,$lastFiftyDay);
+                $averageFiveDay = $this->repo->getAverageFifteenDay($symbol,$lastFiveDay);
 
                 $priceYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->price;
                 $lowYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->low;
@@ -138,12 +141,13 @@ class AnalyzedCommandCophieu extends Command
                 ];
 
                 $rate = $currentVolume ==0 ?0 : $averageFifteenDay / $currentVolume;
+                $rate_five_day = $currentVolume ==0 ?0 : $averageFiveDay / $currentVolume;
 
                 Log::info(sprintf("current volume=%s, average =%s", $currentVolume, $averageFifteenDay));
 
 
                 if (
-                       $rate >= 1.1 && $averageFifteenDay >= 10000
+                       $rate >= 1.1 && $averageFifteenDay >= 10000 && $rate_five_day >= 5
                     // siet nen
                    // && $this->compare([$priceYesterday, $priceLastTwoDay], $currentPrice)
                    // && $this->sietNen($sietNenParam)
