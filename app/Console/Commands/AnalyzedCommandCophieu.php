@@ -147,7 +147,7 @@ class AnalyzedCommandCophieu extends Command
 
 
                 if (
-                       $rate >= 1.1 && $averageFifteenDay >= 10000 && $rate_five_day >= 5
+                       $rate >= 1.1 && $averageFifteenDay >= 1000000 && $rate_five_day >= 10
                     // siet nen
                    // && $this->compare([$priceYesterday, $priceLastTwoDay], $currentPrice)
                    // && $this->sietNen($sietNenParam)
