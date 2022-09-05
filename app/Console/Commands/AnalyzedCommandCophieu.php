@@ -114,17 +114,19 @@ class AnalyzedCommandCophieu extends Command
 
                 $averageFifteenDay = $this->repo->getAverageFifteenDay($symbol,$lastFiftyDay);
                 $averageFiveDay = $this->repo->getAverageFifteenDay($symbol,$lastFiveDay);
-
+                /*
                 $priceYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->price;
                 $lowYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->low;
                 $highYesterday = $this->repo->getValueByDate($symbol, $yesterDay)->high;
                 $priceLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->price;
                 $lowLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->low;
                 $highLastTwoDay = $this->repo->getValueByDate($symbol, $lastTwoDay)->high;
+                */
                 $currentPrice = $stockOfDay[$symbol->name]['close'];
                 $currentLowPrice = $stockOfDay[$symbol->name]['low'];
                 $currentHighPrice = $stockOfDay[$symbol->name]['high'];
-
+                
+                /*
                 $sietNenParam = [
                     [
                         "low" => $lowLastTwoDay,
@@ -139,7 +141,7 @@ class AnalyzedCommandCophieu extends Command
                         "high" => $currentHighPrice
                     ]
                 ];
-
+                */
                 $rate = $currentVolume ==0 ?0 : $averageFifteenDay / $currentVolume;
                 $rate_five_day = $currentVolume ==0 ?0 : $averageFiveDay / $currentVolume;
 
